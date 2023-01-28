@@ -1,16 +1,28 @@
-# This is a sample Python script.
+import pygame
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from game.models import Background, Bird
 
+pygame.init()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+W = 1280
+H = 631
+FPS = 60
 
+sc = pygame.display.set_mode((W, H))
+pygame.display.set_caption("Fly Bird")
+pygame.display.set_icon(pygame.image.load("images/icon.ico"))
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+clock = pygame.time.Clock()
+background = Background("images/background.jpg", [0, 0])
+sc.blit(background.image, background.rect)
+bird = Bird('images/bird.png', [W//2, H//2])
+bird.reduce_size(2)
+sc.blit(bird.image, bird.rect)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+while True:
+    for event in pygame.event.get():
+        if event.type== pygame.QUIT:
+            exit()
+        
+    pygame.display.update()
+    clock.tick(FPS)

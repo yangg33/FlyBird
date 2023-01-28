@@ -19,3 +19,13 @@ class Bird(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.image.get_width() // to, self.image.get_height() //to))
         self.rect = self.image.get_rect()
         self.rect.centerx, self.rect.centery = self.location
+
+class FlyBird(Bird):
+    def __init__(self, location):
+        super().__init__("images/fly_bird.png", location)
+        self.reduce_size(8)
+
+class DownBird(Bird):
+    def __init__(self, location):
+        super().__init__("images/down_bird.png", location)
+        self.reduce_size(8)

@@ -12,7 +12,8 @@ class Background(pygame.sprite.Sprite):
 class Bird(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(image_file)
+        self.image = pygame.image.load(image_file).convert()
+        self.image.set_colorkey((255,255,255))
         self.rect = self.image.get_rect()
         self.location = location
         self.rect.centerx, self.rect.centery = self.location
@@ -38,7 +39,7 @@ class DownBird(Bird):
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self, location):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("images/obstacle.png")
+        self.image = pygame.image.load("images/obstacle.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.location = location
         self.rect.left, self.rect.top = location

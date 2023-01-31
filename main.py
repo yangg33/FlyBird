@@ -29,10 +29,10 @@ def add_obstacle():
     global obstacles
     noise = random.randint(-100, 100)
     obstacle1 = Obstacle([W + 30, H + noise])
-    obstacle1.reduce_size(1.6)
+    obstacle1.reduce_size(1.7)
 
     obstacle2 = Obstacle([W + 30, 0 + noise])
-    obstacle2.reduce_size(1.6)
+    obstacle2.reduce_size(1.7)
 
     return obstacle1, obstacle2
 
@@ -44,26 +44,27 @@ jump_force = 8
 move = jump_force + 1
 gamestart = False
 is_jumped = False
+is_loose = False
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and not gamestart:
+            if event.key == pygame.K_SPACE and not gamestart and not is_loose:
                 gamestart = True
                 pygame.time.set_timer(pygame.USEREVENT, 2000)
             if event.key == pygame.K_SPACE and gamestart:
                 bird = FlyBird([bird.rect.centerx, bird.rect.centery])
                 move = -jump_force
                 is_jumped = True
-        if event.type == pygame.USEREVENT:
+        if event.type == pygame.USEREVENT and gamestart and not is_loose:
             obstacles.append(add_obstacle())
     if move <= 0:
         bird = DownBird([bird.rect.centerx, bird.rect.centery])
     else:
         bird = FlyBird([bird.rect.centerx, bird.rect.centery])
 
-    if is_jumped:
+    if is_jumped and gamestart:
         if 0 <= bird.rect.centery + move < ground:
             bird.rect.centery += move
             move += 1
@@ -79,14 +80,25 @@ while True:
 
     if gamestart:
         for obst1, obst2 in obstacles:
+            if obst1.rect.colliderect(bird.rect) or  obst2.rect.colliderect(bird.rect) :
+
+                gamestart = False
+                is_loose=True
+
+
+    if gamestart:
+        for obst1, obst2 in obstacles:
             obst1.rect.centerx -= speed
             obst2.rect.centerx -= speed
 
             sc.blit(obst1.image, obst1.rect)
             sc.blit(obst2.image, obst2.rect)
+
         while len(obstacles) != 0 and obstacles[0][0].rect.centerx < -30:
             obstacles.pop(0)
-
+    for obst1, obst2 in obstacles:
+        sc.blit(obst1.image, obst1.rect)
+        sc.blit(obst2.image, obst2.rect)
     sc.blit(bird.image, bird.rect)
     pygame.display.update()
     clock.tick(FPS)

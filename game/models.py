@@ -13,13 +13,15 @@ class Bird(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image_file).convert()
-        self.image.set_colorkey((255,255,255))
+        self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
         self.location = location
         self.rect.centerx, self.rect.centery = self.location
 
     def reduce_size(self, to):
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() // to, self.image.get_height() // to))
+        self.image = pygame.transform.scale(
+            self.image, (self.image.get_width() // to, self.image.get_height() // to)
+        )
         self.rect = self.image.get_rect()
         self.rect.centerx, self.rect.centery = self.location
 
@@ -45,6 +47,8 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.left, self.rect.top = location
 
     def reduce_size(self, to):
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() // to, self.image.get_height() // to))
+        self.image = pygame.transform.scale(
+            self.image, (self.image.get_width() // to, self.image.get_height() // to)
+        )
         self.rect = self.image.get_rect()
         self.rect.centerx, self.rect.centery = self.location

@@ -3,6 +3,7 @@ import random
 import pygame
 
 from game.constans import W, H
+from misc.converter_path import resource_path
 
 
 class Background(pygame.sprite.Sprite):
@@ -32,20 +33,20 @@ class Bird(pygame.sprite.Sprite):
 
 class FlyBird(Bird):
     def __init__(self, location):
-        super().__init__("images/fly_bird.png", location)
+        super().__init__(resource_path("images/fly_bird.png"), location)
         self.reduce_size(10)
 
 
 class DownBird(Bird):
     def __init__(self, location):
-        super().__init__("images/down_bird.png", location)
+        super().__init__(resource_path("images/down_bird.png"), location)
         self.reduce_size(10)
 
 
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self, location):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("images/obstacle.png").convert_alpha()
+        self.image = pygame.image.load(resource_path("images/obstacle.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self.location = location
         self.rect.left, self.rect.top = location

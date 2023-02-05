@@ -1,4 +1,8 @@
+import random
+
 import pygame
+
+from game.constans import W, H
 
 
 class Background(pygame.sprite.Sprite):
@@ -52,3 +56,15 @@ class Obstacle(pygame.sprite.Sprite):
         )
         self.rect = self.image.get_rect()
         self.rect.centerx, self.rect.centery = self.location
+
+
+def add_obstacle():
+    global obstacles
+    noise = random.randint(-100, 100)
+    obstacle1 = Obstacle([W + 30, H + noise])
+    obstacle1.reduce_size(1.9)
+
+    obstacle2 = Obstacle([W + 30, 0 + noise])
+    obstacle2.reduce_size(1.9)
+
+    return obstacle1, obstacle2

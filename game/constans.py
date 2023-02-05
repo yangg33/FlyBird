@@ -1,0 +1,6 @@
+JUMP_FORCE = 8
+W = 1280
+H = 631
+FPS = 60
+SPEED = 2.5
+VELOCITY = 0.5
